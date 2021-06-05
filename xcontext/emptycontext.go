@@ -9,7 +9,7 @@ import (
 type EmptyContext struct {
 	RawContext context.Context
 	Protocol   ProtocolType
-	Trace      RasseTrace
+	Trace      FlyTrace
 	Mesh       MeshTrace
 	User       UserInfo
 	Biz        BizTrace
@@ -29,7 +29,7 @@ func (ctx *EmptyContext) GetRawContext() interface{} {
 	return nil
 }
 
-func (ctx *EmptyContext) GetRasseTrace() RasseTrace {
+func (ctx *EmptyContext) GetFlyTrace() FlyTrace {
 	return ctx.Trace
 }
 

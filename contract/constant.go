@@ -1,8 +1,8 @@
-package xcontext
+package contract
 
 const (
 	// 统一前缀
-	FLY_PREFIX = "x-Fly-"
+	FLY_PREFIX = "x-fly-"
 	// 业务链路跟踪Key
 	BIZ_TRACE_KEY = FLY_PREFIX + "biz-id"
 	// 用户信息

@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-// rasse 上下文，与协议无关。
+// Fly 上下文，与协议无关。
 type XContext interface {
 	context.Context
 	// 获取原生的context
@@ -16,7 +16,7 @@ type XContext interface {
 	// 获取全链路跟踪信息
 	GetMeshTrace() MeshTrace
 	// 获取请求跟踪信息
-	GetRasseTrace() RasseTrace
+	GetFlyTrace() FlyTrace
 	//  获取用户信息
 	GetUserInfo() UserInfo
 	// 获取语言信息
@@ -61,7 +61,7 @@ func (p ProtocolType) String() string {
 
 type BizTrace string
 
-type RasseTrace string
+type FlyTrace string
 
 type MeshTrace map[string]string
 
@@ -76,7 +76,7 @@ func ToMap(ctx XContext) map[string]string {
 	var fields = make(map[string]string)
 	fields[USERID_KEY] = userInfo.UserId
 	fields[USERNAME_KEY] = userInfo.UserName
-	fields[RASSE_TRACE_KEY] = string(ctx.GetRasseTrace())
+	fields[RASSE_TRACE_KEY] = string(ctx.GetFlyTrace())
 	fields[BIZ_TRACE_KEY] = string(ctx.GetBizTrace())
 	fields[LANG_KEY] = ctx.GetLang().Code
 	apm := ctx.GetMeshTrace()

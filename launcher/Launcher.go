@@ -37,7 +37,6 @@ func NewApp(cfg *config.RainbowInfo) *app.App {
 
 	instance.InitModule(app.ModuleLog, func() error {
 		defer xlog.Sync()
-
 		err := xlog.Init(&xlog.LogSettings{
 			Level:       config.GetStringOrDefault("log.level", xlog.DefaultLevel),
 			Path:        config.GetStringOrDefault("log.path", xlog.DefaultPath),

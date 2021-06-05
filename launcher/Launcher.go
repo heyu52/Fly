@@ -35,7 +35,22 @@ func NewApp(cfg *config.RainbowInfo) *app.App {
 
 	app.Instance = instance
 
-	instance.InitModule(app.ModuleGin, func() error {
+	instance.InitModule(app.ModuleLog, func() error {
+		defer xlog.Sync()
+
+		err := xlog.Init(&xlog.LogSettings{
+			Level:       config.GetStringOrDefault("log.level", xlog.DefaultLevel),
+			Path:        config.GetStringOrDefault("log.path", xlog.DefaultPath),
+			FileName:    config.GetStringOrDefault("log.filename", xlog.DefaultFileName),
+			CataLog:     config.GetStringOrDefault("log.catalog", xlog.DefaultCataLog),
+			MaxFileSize: config.GetIntOrDefault("log.maxfilesize", xlog.DefaultMaxFileSize),
+			MaxBackups:  config.GetIntOrDefault("log.maxbackups", xlog.DefaultMaxBackups),
+			MaxAge:      config.GetIntOrDefault("log.maxage", xlog.DefaultMaxAge),
+			Caller:      config.GetBoolOrDefault("log.caller", xlog.DefaultCaller),
+		})
+		return err
+	}).
+		InitModule(app.ModuleGin, func() error {
 		ginMode := os.Getenv("GIN_MODE")
 		if len(ginMode) == 0 {
 			runtimeEnv := env.GetRuntimeEnv()
@@ -48,7 +63,7 @@ func NewApp(cfg *config.RainbowInfo) *app.App {
 				gin.SetMode(gin.ReleaseMode)
 			}
 		}
-		engine:=gin.New()
+		engine := gin.New()
 		engine.Use(gin.Recovery())
 		xlog.Infof("%s: %s\n", gin.EnvGinMode, gin.Mode())
 		app.Instance.Engine = engine

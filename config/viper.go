@@ -9,3 +9,17 @@ func GetStringOrDefault(key, defaultValue string) string  {
 	}
 	return  defaultValue
 }
+
+func GetBoolOrDefault(key string, defaultValue bool) bool {
+	if exists := viper.IsSet(key); exists {
+		return viper.GetBool(key)
+	}
+	return defaultValue
+}
+
+func GetIntOrDefault(key string, defaultValue int) int {
+	if exists := viper.IsSet(key); exists {
+		return viper.GetInt(key)
+	}
+	return defaultValue
+}
